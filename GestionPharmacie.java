@@ -4,8 +4,6 @@ import com.google.gson.reflect.TypeToken;
 import java.io.*;
 import java.lang.reflect.Type;
 
-
-// Classe principale de gestion de la pharmacie
 public class GestionPharmacie {
     private static List<Medicament> medicaments = new ArrayList<>();
     private static List<Client> clients = new ArrayList<>();
@@ -36,10 +34,10 @@ public class GestionPharmacie {
             scanner.nextLine();
 
             switch (choix) {
-                case 1 : menuClient();
-                case 2 :menuPharmacien();
-                case 0 : System.out.println("Au revoir !");
-                default : System.out.println("Choix invalide.");
+                case 1: menuClient(); break;
+                case 2: menuPharmacien(); break;
+                case 0: System.out.println("Au revoir !"); break;
+                default: System.out.println("Choix invalide."); break;
             }
         } while (choix != 0);
     }
@@ -62,10 +60,10 @@ public class GestionPharmacie {
             scanner.nextLine();
 
             switch (choix) {
-                case 1 :afficherMedicaments();
-                case 2 : effectuerVente();
-                case 0 : System.out.println("Retour au menu principal.");
-                default : System.out.println("Choix invalide.");
+                case 1: afficherMedicaments(); break;
+                case 2: effectuerVente(); break;
+                case 0: System.out.println("Retour au menu principal."); break;
+                default: System.out.println("Choix invalide."); break;
             }
         } while (choix != 0);
     }
@@ -92,14 +90,14 @@ public class GestionPharmacie {
             scanner.nextLine();
 
             switch (choix) {
-                case 1 : ajouterMedicament();
-                case 2 : afficherMedicaments();
-                case 3 : ajouterClient();
-                case 4 : effectuerVente();
-                case 5 : afficherVentes();
-                case 6 : rechercherMedicamentParId();
-                case 0 : System.out.println("Retour au menu principal.");
-                default : System.out.println("Choix invalide.");
+                case 1: ajouterMedicament(); break;
+                case 2: afficherMedicaments(); break;
+                case 3: ajouterClient(); break;
+                case 4: effectuerVente(); break;
+                case 5: afficherVentes(); break;
+                case 6: rechercherMedicamentParId(); break;
+                case 0: System.out.println("Retour au menu principal."); break;
+                default: System.out.println("Choix invalide."); break;
             }
         } while (choix != 0);
     }
@@ -289,15 +287,14 @@ public class GestionPharmacie {
 
     public static void sauvegarderMedicaments() {
         try (Writer writer = new FileWriter("medicaments.json")) {
-            Fichier<Medicament> typeFactory =
-                Fichier.of(Medicament.class, "type")
-                .registerSubtype(MedicamentVenteLibre.class)
-                .registerSubtype(MedicamentAOrdonnance.class);
+            Fichier<Medicament> typeFactory = Fichier.of(Medicament.class, "type")
+                    .registerSubtype(MedicamentVenteLibre.class)
+                    .registerSubtype(MedicamentAOrdonnance.class);
 
             Gson gson = new GsonBuilder()
-                .registerTypeAdapterFactory(typeFactory)
-                .setPrettyPrinting()
-                .create();
+                    .registerTypeAdapterFactory(typeFactory)
+                    .setPrettyPrinting()
+                    .create();
 
             gson.toJson(medicaments, writer);
             System.out.println("Médicaments sauvegardés dans medicaments.json.");
@@ -307,26 +304,28 @@ public class GestionPharmacie {
     }
 
     public static void chargerMedicaments() {
-        try (Reader reader = new FileReader("medicaments.json")) {
-            Fichier<Medicament> typeFactory =
-                Fichier.of(Medicament.class, "type")
-                .registerSubtype(MedicamentVenteLibre.class)
-                .registerSubtype(MedicamentAOrdonnance.class);
+        File fichier = new File("medicaments.json");
+        if (!fichier.exists()) {
+            System.out.println("Fichier JSON introuvable. Initialisation par défaut.");
+            initialiserMedicaments();
+            sauvegarderMedicaments();
+            return;
+        }
+
+        try (Reader reader = new FileReader(fichier)) {
+            Fichier<Medicament> typeFactory = Fichier.of(Medicament.class, "type")
+                    .registerSubtype(MedicamentVenteLibre.class)
+                    .registerSubtype(MedicamentAOrdonnance.class);
 
             Gson gson = new GsonBuilder()
-                .registerTypeAdapterFactory(typeFactory)
-                .create();
+                    .registerTypeAdapterFactory(typeFactory)
+                    .create();
 
             Type type = new TypeToken<List<Medicament>>(){}.getType();
             medicaments = gson.fromJson(reader, type);
             System.out.println("Médicaments chargés depuis medicaments.json.");
-        } catch (FileNotFoundException e) {
-            System.out.println("Fichier JSON introuvable. Initialisation par défaut.");
-            chargerMedicaments();
-            sauvegarderMedicaments();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 }

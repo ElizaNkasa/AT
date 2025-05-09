@@ -1,0 +1,51 @@
+[
+  {
+    "indications": "Maux de tête",
+    "id": 1,
+    "nom": "Doliprane",
+    "prix": 2.5,
+    "fabricant": "Sanofi",
+    "stock": 50,
+    "type": "MedicamentVenteLibre"
+  },
+  {
+    "dosage": "500mg",
+    "contreIndication": "Allergie à la pénicilline",
+    "id": 2,
+    "nom": "Amoxicilline",
+    "prix": 10.0,
+    "fabricant": "Biogaran",
+    "stock": 20,
+    "type": "MedicamentAOrdonnance"
+  },
+  {
+    "dosage": "10mg",
+    "contreIndication": "Pour la fièvre",
+    "id": 3,
+    "nom": "Quininit",
+    "prix": 15.0,
+    "fabricant": "Biogaran",
+    "stock": 100,
+    "type": "MedicamentAOrdonnance"
+  },
+  {
+    "dosage": "30mg",
+    "contreIndication": "La douleur",
+    "id": 4,
+    "nom": "Vircis",
+    "prix": 1.0,
+    "fabricant": "Shalina",
+    "stock": 150,
+    "type": "MedicamentAOrdonnance"
+  },
+  {
+    "dosage": "10mg",
+    "contreIndication": "La fièvre",
+    "id": 5,
+    "nom": "Paracétamol",
+    "prix": 300.0,
+    "fabricant": "Shalina",
+    "stock": 5000,
+    "type": "MedicamentAOrdonnance"
+  }
+]
